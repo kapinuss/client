@@ -13,7 +13,6 @@ func main() {
 
 	gocron.Clear()
 
-	// function Start start all the pending jobs
 	<-gocron.Start()
 
 }

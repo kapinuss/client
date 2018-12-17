@@ -2,15 +2,25 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
+
+	"github.com/jasonlvhit/gocron"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "hello, world!", r.URL.Path[1:])
+func main() {
+
+	gocron.Every(1).Second().Do(innerFunc("user"))
+
+	gocron.Clear()
+
+	<-gocron.Start()
+
 }
 
-func main() {
-	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+func innerFunc(name string) string {
+	return "Hello, " + name + "!"
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("hello, world!")
 }
